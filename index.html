@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en"  manifest="example.appcache">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Salary Scale</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  </head>
+  <body>
+      <h2>Salary Calculator</h2>
+      <div class="container">
+          <form>
+          <div class="row form-group">
+              <div class="col-sm-3"></div>
+              <div class="col-sm-3"><label>Current Salary in Lakhs (L):</label> </div>
+              <div class="col-sm-3">
+                  <input type="number" value="2.3" id="currSal" class="form-control" placeholder="Your Current Salary">
+                  <input type="button" class="btn btn-danger xBtn" value="x">
+              </div>
+              <div class="col-sm-3"></div>
+          </div>
+          
+          <div class="row form-group">
+              <div class="col-sm-3"></div>
+              <div class="col-sm-3"><label>Expected Salary in Lakhs (L):</label> </div>
+              <div class="col-sm-3">
+                <input type="number" id="expSal" class="form-control" placeholder="Your Expected Salary">
+                <input type="button" class="btn btn-danger xBtn" value="x">
+              </div>
+              <div class="col-sm-3"></div> 
+          </div>
+          
+          <div class="row form-group">
+              <div class="col-sm-3"></div>
+              <div class="col-sm-3"><label>Hike in Percentage (%): </label> </div>
+              <div class="col-sm-3">
+                <input type="number" id="hikePct" class="form-control" placeholder="Your Hike Percentage">
+                <input type="button" class="btn btn-danger xBtn" value="x"></div>
+              <div class="col-sm-3"></div>
+          </div>
+          <div class="row form-group">
+              <div class="col-sm-5"></div>
+              <div class="col-sm-2"><input type="button" class="btn btn-primary" value="Calculate" onclick="calculate();"/></div>
+              <div class="col-sm-5"></div>
+          </div>
+          </form>
+      </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+      
+      <script>
+          $('.xBtn').on('click',function(){
+              var currObj =$(this);
+              var inpObj = currObj.closest('div').find('input[type="number"]');
+              inpObj.val('');
+          })
+        function calculate(){
+            var currSalVal = $('#currSal').val();
+            currSalVal = $.isNumeric(currSalVal) ? parseFloat(currSalVal) : 0.00;
+            
+            var expSalVal = $('#expSal').val();
+            expSalVal = $.isNumeric(expSalVal) ? parseFloat(expSalVal) : 0.00;
+            
+            var hikePctVal = $('#hikePct').val();
+            
+            if($('#hikePct').val() == ''){
+                hikePctVal = ((expSalVal / currSalVal) - 1)*100;
+                $('#hikePct').val(hikePctVal.toFixed(2));    
+            }else if($('#expSal').val() == ''){
+                expSalVal = ((hikePctVal / 100) + 1) * currSalVal;
+                $('#expSal').val(expSalVal.toFixed(2));
+            }
+            
+        }
+      </script>
+  </body>
+</html>
